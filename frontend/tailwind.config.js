@@ -13,7 +13,8 @@ export default {
       },
       fontFamily: {
         display: ["'Space Grotesk'", "sans-serif"],
-        body: ["'Inter'", "sans-serif"],
+        body: ["'IBM Plex Sans'", "sans-serif"],
+        mono: ["'IBM Plex Mono'", "monospace"],
       },
     },
   },

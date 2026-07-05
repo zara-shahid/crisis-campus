@@ -1,10 +1,17 @@
 import type { DangerLevel } from "../types/emergency";
 
 const STYLES: Record<DangerLevel, string> = {
-  low: "bg-success/10 text-success border-success/30",
-  moderate: "bg-warning/10 text-warning border-warning/30",
-  high: "bg-danger/10 text-danger border-danger/30",
-  critical: "bg-danger text-white border-danger",
+  low: "border-success text-success",
+  moderate: "border-warning text-warning",
+  high: "border-danger text-danger",
+  critical: "border-danger bg-danger text-white",
+};
+
+const CODES: Record<DangerLevel, string> = {
+  low: "LVL-1",
+  moderate: "LVL-2",
+  high: "LVL-3",
+  critical: "LVL-4",
 };
 
 const LABELS: Record<DangerLevel, string> = {
@@ -17,13 +24,12 @@ const LABELS: Record<DangerLevel, string> = {
 export default function RiskBadge({ level }: { level: DangerLevel }) {
   return (
     <span
-      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-semibold font-display ${STYLES[level]}`}
+      className={`inline-flex items-center gap-2 rounded border-2 px-3 py-1 font-display text-sm font-semibold ${STYLES[level]}`}
     >
-      <span
-        className={`h-2 w-2 rounded-full ${
-          level === "critical" ? "bg-white" : "bg-current"
-        } ${level === "critical" ? "" : "animate-pulse"}`}
-      />
+      <span className="font-mono text-[10px] tracking-widest opacity-70">
+        {CODES[level]}
+      </span>
+      <span className="h-3 w-px bg-current opacity-30" />
       {LABELS[level]}
     </span>
   );

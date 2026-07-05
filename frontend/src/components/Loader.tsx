@@ -8,7 +8,7 @@ export default function Loader({ label = "Working on it..." }: { label?: string 
         animate={{ scale: [1, 1.4, 1], opacity: [1, 0.4, 1] }}
         transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
       />
-      <span className="text-sm font-medium">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wide">{label}</span>
     </div>
   );
 }

@@ -8,7 +8,7 @@ export default function Assistant() {
   return (
     <main className="min-h-screen bg-canvas px-4 py-12">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="font-display text-sm font-semibold uppercase tracking-widest text-action">
+        <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-action">
           AI Emergency Assistant
         </p>
         <h1 className="mt-2 font-display text-3xl font-bold text-base">
@@ -18,10 +18,10 @@ export default function Assistant() {
           We'll turn it into a clear, personalized plan in seconds.
         </p>
         {conditions.length > 0 && (
-          <p className="mt-2 text-xs text-base/50">
-            Personalizing for: {conditions.join(", ")}
-          </p>
-        )}
+  <p className="mt-2 font-mono text-xs text-base/50">
+    Personalizing for: {conditions.join(", ")}
+  </p>
+)}
       </div>
       <div className="mt-10">
         <AIChat medicalConditions={conditions} />

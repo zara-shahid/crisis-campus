@@ -4,6 +4,7 @@ import { getEmergencyPlan } from "../services/api";
 import type { EmergencyPlan } from "../types/emergency";
 import RiskBadge from "./RiskBadge";
 import Loader from "./Loader";
+import AlertBanner from "./AlertBanner";
 
 const EXAMPLES = [
   "There is smoke coming from the apartment below mine",
@@ -11,7 +12,7 @@ const EXAMPLES = [
   "Earthquake just hit, I'm stuck in a stairwell",
 ];
 
-function ListCard({
+function ReportField({
   title,
   items,
   accent,
@@ -21,8 +22,8 @@ function ListCard({
   accent: string;
 }) {
   return (
-    <div className="rounded-2xl border border-base/10 bg-white p-5 shadow-sm">
-      <h3 className={`font-display text-sm font-semibold uppercase tracking-wide ${accent}`}>
+    <div className="border-t border-base/10 py-4 first:border-t-0">
+      <h3 className={`font-mono text-[11px] font-semibold uppercase tracking-widest ${accent}`}>
         {title}
       </h3>
       <ul className="mt-3 space-y-2">
@@ -37,6 +38,13 @@ function ListCard({
   );
 }
 
+function generateReportId() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const rand = Math.floor(1000 + Math.random() * 9000);
+  return `CC-${y}-${rand}`;
+}
+
 export default function AIChat({
   medicalConditions = [],
 }: {
@@ -46,6 +54,7 @@ export default function AIChat({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [plan, setPlan] = useState<EmergencyPlan | null>(null);
+  const [report, setReport] = useState<{ id: string; time: string } | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -56,6 +65,10 @@ export default function AIChat({
     try {
       const result = await getEmergencyPlan({ situation, medical_conditions: medicalConditions });
       setPlan(result);
+      setReport({
+        id: generateReportId(),
+        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
+      });
     } catch (err) {
       console.error(err);
       setError(
@@ -102,7 +115,7 @@ export default function AIChat({
       </form>
 
       <div className="mt-6">
-        {loading && <Loader label="Consulting the AI Emergency Assistant..." />}
+        {loading && <Loader label="Analyzing situation..." />}
         {error && (
           <p className="rounded-xl border border-danger/30 bg-danger/5 p-4 text-sm text-danger">
             {error}
@@ -110,23 +123,43 @@ export default function AIChat({
         )}
 
         <AnimatePresence>
-          {plan && (
+          {plan && report && (
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35 }}
-              className="space-y-4"
+              className="overflow-hidden rounded-2xl border border-base/10 bg-white shadow-sm"
             >
-              <div className="flex items-center justify-between">
-                <p className="font-display text-sm text-base/60">Your situation</p>
-                <RiskBadge level={plan.danger_level} />
-              </div>
-              <p className="rounded-xl bg-base/5 p-4 text-sm text-base/90">{plan.situation}</p>
+              {(plan.danger_level === "critical" || plan.danger_level === "high") && (
+                <AlertBanner
+                  label="Alert"
+                  message={`${plan.danger_level} risk detected · respond immediately`}
+                  tone="danger"
+                />
+              )}
 
-              <ListCard title="Immediate actions" items={plan.immediate_actions} accent="text-danger" />
-              <ListCard title="Things to carry" items={plan.things_to_carry} accent="text-action" />
-              <ListCard title="Nearby help" items={plan.nearby_help} accent="text-success" />
-              <ListCard title="Safety tips" items={plan.safety_tips} accent="text-warning" />
+              <div className="p-5">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-base/10 pb-4">
+                  <div>
+                    <p className="font-display text-sm font-semibold uppercase tracking-wide text-base">
+                      Incident report
+                    </p>
+                    <p className="font-mono text-[11px] text-base/50">
+                      #{report.id} · generated {report.time}
+                    </p>
+                  </div>
+                  <RiskBadge level={plan.danger_level} />
+                </div>
+
+                <p className="mt-4 rounded-lg bg-base/5 p-3 text-sm text-base/90">
+                  {plan.situation}
+                </p>
+
+                <ReportField title="Immediate actions" items={plan.immediate_actions} accent="text-danger" />
+                <ReportField title="Things to carry" items={plan.things_to_carry} accent="text-action" />
+                <ReportField title="Nearby help" items={plan.nearby_help} accent="text-success" />
+                <ReportField title="Safety tips" items={plan.safety_tips} accent="text-warning" />
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

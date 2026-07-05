@@ -1,77 +1,108 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import AlertBanner from "../components/AlertBanner";
 
-const FEATURES = [
+const STATUS = [
   {
-    title: "AI Emergency Assistant",
-    body: "Describe your situation in plain words and get a personalized plan in seconds.",
-    accent: "text-danger",
+    label: "AI Emergency Assistant",
+    detail: "Personalized plans generated on demand",
+    status: "ONLINE",
+    dot: "bg-success",
   },
   {
-    title: "Safe routes & shelters",
-    body: "See nearby shelters and hospitals on a live map when every minute counts.",
-    accent: "text-action",
+    label: "Shelters & routes",
+    detail: "Map data is illustrative for this build",
+    status: "DEMO DATA",
+    dot: "bg-warning",
   },
   {
-    title: "Preparedness checklist",
-    body: "Build your go-bag and readiness plan before a crisis ever starts.",
-    accent: "text-success",
+    label: "Preparedness checklist",
+    detail: "Go-bag tracker, ships later this week",
+    status: "IN PROGRESS",
+    dot: "bg-action",
   },
 ];
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-canvas">
-      <section className="mx-auto flex max-w-4xl flex-col items-center px-4 pb-16 pt-24 text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="font-display text-sm font-semibold uppercase tracking-widest text-action"
-        >
-          Crisis Compass
-        </motion.p>
-        <motion.h1
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mt-4 font-display text-4xl font-bold leading-tight text-base sm:text-5xl"
-        >
-          A flood warning just went out.
-          <br />
-          <span className="text-action">You'll know exactly what to do.</span>
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mt-6 max-w-xl text-base/70"
-        >
-          Describe what's happening. Crisis Compass turns it into a personalized
-          evacuation plan, the nearest shelter, a safe route, and what to pack,
-          built around your own medical needs.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mt-8"
-        >
-          <Link
-            to="/assistant"
-            className="inline-block rounded-xl bg-action px-6 py-3 font-display font-semibold text-white shadow-sm transition hover:bg-action/90"
+      <section className="bg-base">
+        <div className="mx-auto flex max-w-4xl flex-col items-center px-4 pb-14 pt-20 text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-action"
           >
-            Try the AI Assistant
-          </Link>
+            Crisis Compass · AI-Powered Emergency Guidance
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="mt-5 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl"
+          >
+            A flood warning just went out.
+            <br />
+            <span className="text-action">You'll know exactly what to do.</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="mt-5 max-w-xl text-white/60"
+          >
+            Describe what's happening. Crisis Compass turns it into a personalized
+            evacuation plan, the nearest shelter, a safe route, and what to pack,
+            built around your own medical needs.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="mt-8"
+          >
+            <Link
+              to="/assistant"
+              className="inline-block rounded-xl bg-action px-6 py-3 font-display font-semibold text-white shadow-sm transition hover:bg-action/90"
+            >
+              Try the AI Assistant
+            </Link>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <AlertBanner
+            label="Live demo"
+            message="Flood warning · District 4 · Issued 14:32"
+            tone="warning"
+          />
         </motion.div>
       </section>
 
-      <section className="mx-auto grid max-w-4xl gap-4 px-4 pb-24 sm:grid-cols-3">
-        {FEATURES.map((f) => (
-          <div key={f.title} className="rounded-2xl border border-base/10 bg-white p-6 shadow-sm">
-            <h3 className={`font-display text-lg font-semibold ${f.accent}`}>{f.title}</h3>
-            <p className="mt-2 text-sm text-base/70">{f.body}</p>
-          </div>
-        ))}
+      <section className="mx-auto max-w-4xl px-4 py-14">
+        <p className="font-mono text-xs font-semibold uppercase tracking-widest text-base/40">
+          System status
+        </p>
+        <div className="mt-4 divide-y divide-base/10 rounded-2xl border border-base/10 bg-white">
+          {STATUS.map((item) => (
+            <div key={item.label} className="flex items-center justify-between gap-4 px-5 py-4">
+              <div className="flex items-center gap-3">
+                <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${item.dot}`} />
+                <div>
+                  <p className="font-display text-sm font-semibold text-base">{item.label}</p>
+                  <p className="text-xs text-base/50">{item.detail}</p>
+                </div>
+              </div>
+              <span className="font-mono text-[11px] font-semibold uppercase tracking-widest text-base/50">
+                {item.status}
+              </span>
+            </div>
+          ))}
+        </div>
       </section>
     </main>
   );

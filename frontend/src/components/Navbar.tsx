@@ -5,9 +5,12 @@ export default function Navbar() {
   const { user, loading } = useAuth();
 
   return (
-    <header className="border-b border-base/10 bg-white">
+    <header className="bg-white">
       <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
-        <Link to="/" className="font-display font-bold text-base">
+        <Link to="/" className="flex items-center gap-2 font-display font-bold text-base">
+          <span className="flex h-6 w-6 items-center justify-center rounded bg-base font-mono text-[10px] text-white">
+            CC
+          </span>
           Crisis Compass
         </Link>
         <nav className="flex items-center gap-4 text-sm">
@@ -34,6 +37,7 @@ export default function Navbar() {
           )}
         </nav>
       </div>
+      <div className="hazard-stripe h-1 w-full opacity-70" />
     </header>
   );
 }
