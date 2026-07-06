@@ -15,3 +15,6 @@ class User(Base):
 
     emergency_contact_name = Column(String, nullable=True)
     emergency_contact_phone = Column(String, nullable=True)
+
+    # Preparedness checklist — stores list of checked item IDs e.g. ["w1", "f2", "m3"]
+    checklist_progress = Column(JSON, default=list)

@@ -21,6 +21,12 @@ export default function Navbar() {
           <Link to="/assistant" className="text-muted transition-colors hover:text-white">
             Assistant
           </Link>
+          <Link to="/dashboard" className="text-muted transition-colors hover:text-white">
+            Dashboard
+          </Link>
+          <Link to="/checklist" className="text-muted transition-colors hover:text-white">
+            Checklist
+          </Link>
           {!loading && user && (
             <Link to="/profile" className="text-muted transition-colors hover:text-white">
               Profile

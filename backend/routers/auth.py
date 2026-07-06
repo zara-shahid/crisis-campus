@@ -90,3 +90,27 @@ def update_me(
     db.commit()
     db.refresh(current_user)
     return current_user
+
+
+@router.get("/me/checklist")
+def get_checklist(current_user: User = Depends(get_current_user)):
+    """Return the list of checked preparedness item IDs for the current user."""
+    return {"checked_ids": current_user.checklist_progress or []}
+
+
+@router.patch("/me/checklist")
+def update_checklist(
+    payload: dict,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Replace the user's checklist progress with the supplied list.
+    Body: { "checked_ids": ["w1", "f2", ...] }
+    """
+    checked_ids = payload.get("checked_ids")
+    if not isinstance(checked_ids, list):
+        raise HTTPException(status_code=422, detail="checked_ids must be a list")
+    current_user.checklist_progress = checked_ids
+    db.commit()
+    return {"ok": True, "saved": len(checked_ids)}

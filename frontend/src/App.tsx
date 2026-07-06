@@ -6,6 +6,8 @@ import Assistant from "./pages/Assistant";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+import Dashboard from "./pages/Dashboard";
+import Checklist from "./pages/Checklist";
 
 export default function App() {
   return (
@@ -18,6 +20,8 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/checklist" element={<Checklist />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
