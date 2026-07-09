@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import Checklist from "./pages/Checklist";
+import CommunityBoard from "./pages/CommunityBoard";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/checklist" element={<Checklist />} />
+          <Route path="/community" element={<CommunityBoard />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

@@ -4,7 +4,12 @@
 @tailwind utilities;
 
 body {
-  @apply bg-canvas text-white font-body antialiased;
+  @apply bg-canvas text-white/95 font-body antialiased;
+}
+
+/* Slightly improve legibility of secondary copy without changing hue */
+::placeholder {
+  color: rgb(255 255 255 / 0.45);
 }
 
 @keyframes marquee {

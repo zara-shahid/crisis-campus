@@ -27,6 +27,9 @@ export default function Navbar() {
           <Link to="/checklist" className="text-muted transition-colors hover:text-white">
             Checklist
           </Link>
+          <Link to="/community" className="text-muted transition-colors hover:text-white">
+            Community
+          </Link>
           {!loading && user && (
             <Link to="/profile" className="text-muted transition-colors hover:text-white">
               Profile

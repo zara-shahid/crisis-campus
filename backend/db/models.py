@@ -1,5 +1,13 @@
-from sqlalchemy import Column, Integer, String, JSON
+from datetime import datetime, timezone
+
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, JSON
+from sqlalchemy.orm import relationship
+
 from db.database import Base
+
+
+def _utcnow():
+    return datetime.now(timezone.utc)
 
 
 class User(Base):
@@ -18,3 +26,21 @@ class User(Base):
 
     # Preparedness checklist — stores list of checked item IDs e.g. ["w1", "f2", "m3"]
     checklist_progress = Column(JSON, default=list)
+
+    help_posts = relationship("HelpPost", back_populates="author", cascade="all, delete-orphan")
+
+
+class HelpPost(Base):
+    __tablename__ = "help_posts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    category = Column(String, nullable=False, index=True)
+    title = Column(String, nullable=False)
+    description = Column(Text, nullable=False)
+    location = Column(String, nullable=True)
+    contact_phone = Column(String, nullable=True)
+    status = Column(String, default="open", nullable=False, index=True)
+    created_at = Column(DateTime(timezone=True), default=_utcnow, nullable=False)
+
+    author = relationship("User", back_populates="help_posts")

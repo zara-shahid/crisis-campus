@@ -6,8 +6,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from db.database import Base, engine
-from db.models import User
-from routers import assistant, auth, alerts, locations
+from db.models import User, HelpPost
+from routers import assistant, auth, alerts, locations, help_board
 
 Base.metadata.create_all(bind=engine)
 
@@ -30,6 +30,7 @@ app.include_router(assistant.router)
 app.include_router(auth.router)
 app.include_router(alerts.router)
 app.include_router(locations.router)
+app.include_router(help_board.router)
 
 
 @app.get("/")

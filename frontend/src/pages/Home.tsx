@@ -74,6 +74,7 @@ const STATUS = [
   { label: "AI Emergency Assistant", detail: "Real-time personalized plans", status: "ONLINE", color: "emerald" },
   { label: "Shelter & Route Finder", detail: "Nearest safe locations mapped", status: "DEMO", color: "amber" },
   { label: "Preparedness Checklist", detail: "Go-bag tracker & alerts", status: "BUILDING", color: "sky" },
+  { label: "Community Help Board", detail: "Post needs for water, food, shelter, rides", status: "ONLINE", color: "emerald" },
 ];
 
 export default function Home() {
@@ -329,7 +330,7 @@ export default function Home() {
             <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">System Status</span>
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           </div>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {STATUS.map((item, i) => (
               <motion.div
                 key={item.label}

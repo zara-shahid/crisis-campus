@@ -12,7 +12,7 @@ export default {
         warning: "#f59e0b",   // Amber 500
         success: "#10b981",   // Emerald 500
         canvas: "#000000",    // True black canvas
-        muted: "#a1a1aa",     // Zinc 400 for muted text
+        muted: "#d4d4d8",     // Zinc 300 — slightly brighter for readability on dark backgrounds
       },
       fontFamily: {
         display: ["'Outfit'", "sans-serif"],
