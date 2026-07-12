@@ -63,7 +63,7 @@ A real, database-backed board where logged-in users can:
 
 | Part | Status |
 |------|--------|
-| AI assistant, auth, profiles, checklist, community board | **Real** — live API + SQLite database |
+| AI assistant, auth, profiles, checklist, community board | **Real** — live API + PostgreSQL database |
 | Shelter/hospital map data | **Demo** — mock Overpass data, labeled as such |
 | Weather & alerts | **Live** — fetched from external APIs |
 
@@ -90,12 +90,18 @@ Community board coordinates mutual aid
 | Layer | Technologies |
 |-------|--------------|
 | Frontend | React, Vite, TypeScript, Tailwind CSS, Framer Motion, Leaflet |
-| Backend | FastAPI, SQLAlchemy, SQLite, JWT, LangChain, Groq |
+| Backend | FastAPI, SQLAlchemy, PostgreSQL, JWT, LangChain, Groq |
 | AI | Groq LLM with structured Pydantic output |
 
 ---
 
 ## Getting started
+
+**Prerequisite:** PostgreSQL must be running locally (or use a hosted instance). Create a database:
+
+```sql
+CREATE DATABASE crisis_compass;
+```
 
 ```powershell
 # Terminal 1 — backend
@@ -103,7 +109,7 @@ cd backend
 python -m venv venv
 venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-copy .env.example .env   # add GROQ_API_KEY and JWT_SECRET
+copy .env.example .env   # set GROQ_API_KEY, JWT_SECRET, and DATABASE_URL
 uvicorn main:app --reload --port 8000
 
 # Terminal 2 — frontend
@@ -134,7 +140,7 @@ Open **http://localhost:5173**
 |----------|----------|-------------|
 | `GROQ_API_KEY` | Yes | Groq API key for the AI assistant |
 | `JWT_SECRET` | Yes | Secret for signing auth tokens |
-| `DATABASE_URL` | No | Defaults to `sqlite:///./crisis_compass.db` |
+| `DATABASE_URL` | Yes* | PostgreSQL connection string, e.g. `postgresql://postgres:postgres@localhost:5432/crisis_compass` |
 
 **Frontend** (`frontend/.env`):
 

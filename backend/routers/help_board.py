@@ -29,7 +29,7 @@ def get_optional_user(
 
 
 def _ensure_utc(dt: datetime) -> datetime:
-    """SQLite returns naive datetimes — treat them as UTC for correct client display."""
+    """Naive datetimes from the DB are treated as UTC for correct client display."""
     if dt.tzinfo is None:
         return dt.replace(tzinfo=timezone.utc)
     return dt.astimezone(timezone.utc)

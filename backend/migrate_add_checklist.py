@@ -1,8 +1,8 @@
 """
-One-shot migration: add checklist_progress column to the users table.
-Safe to run multiple times — skips if the column already exists.
+Legacy one-shot migration for SQLite only (checklist_progress column).
+For PostgreSQL, tables are created automatically via SQLAlchemy on app startup.
 
-Usage:
+Usage (SQLite only):
     python migrate_add_checklist.py
 """
 import sqlite3
