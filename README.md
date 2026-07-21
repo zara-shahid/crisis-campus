@@ -23,8 +23,6 @@ A tactical, AI-powered emergency response platform built to help people stay cal
 
 ## Screenshots
 
-> Drop your screenshots below to bring the README to life!
-
 | Home | Dashboard |
 |------|-----------|
 | ![Home page screenshot](screenshots/home.png) | ![Dashboard screenshot](screenshots/dashboard.png) |
